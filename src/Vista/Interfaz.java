@@ -14,7 +14,7 @@ autores.add(new Autor(nombre, pais, id));
 public void mostrarAutores(ArrayList<Autor> autores) {
         String salida = "----------------------------Autores----------------------------\n";
         for (Autor a : autores ) {
-           salida += a.getNombre() + "|" + a.getPais() + "|" + a.getIdA() ;
+           salida += a.getNombre() + "|" + a.getPais() + "|" + a.getIdA() + "\n" ;
         }
         JOptionPane.showMessageDialog(null, salida);
     }
@@ -23,7 +23,7 @@ public void mostrarLibros(ArrayList<Libros> libro, ArrayList<Autor> autores) {
         String salida = "----------------------------Libros----------------------------\n";
         for (Libros l : libro ) {
            
-            salida += l.getId() + "|" + l.getCodigo() + "|" + l.getAutor().getIdA() + "|" + l.getEditorial() + "|" + l.getEditorial() + "|" + l.getTitulo() + "|" + l.getTitulo() + "|" + l.getAño()  + "|" + l.getPag() ;
+            salida += l.getId() + "|" + l.getCodigo() + "|" + l.getAutor().getIdA() + "|" + l.getEditorial() + "|" + l.getTitulo() + "|" + l.getAño()  + "|" + l.getPag() + "" ;
         }
         JOptionPane.showMessageDialog(null, salida);
     }
@@ -42,7 +42,7 @@ public  void BuscarLibro (ArrayList<Libros> libro, ArrayList<Autor> autores){
 
         if (LnEncontado != null) {
             JOptionPane.showMessageDialog(null, "Libro Encontrado");
-            JOptionPane.showMessageDialog(null,LnEncontado.getId() + "|" + LnEncontado.getCodigo() + "|" + LnEncontado.getAutor().getIdA() + "|" + LnEncontado.getEditorial() + "|" + LnEncontado.getEditorial() + "|" + LnEncontado.getTitulo() + "|" + LnEncontado.getTitulo() + "|" + LnEncontado.getAño()  + "|" + LnEncontado.getPag());
+            JOptionPane.showMessageDialog(null,LnEncontado.getId() + "|" + LnEncontado.getCodigo() + "|" + LnEncontado.getAutor().getIdA() + "|" + LnEncontado.getEditorial() + "|" + LnEncontado.getTitulo() + "|" + LnEncontado.getAño()  + "|" + LnEncontado.getPag());
         }
         
         else {

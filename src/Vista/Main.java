@@ -18,7 +18,8 @@ import javax.swing.JOptionPane;
         op = Integer.parseInt(JOptionPane.showInputDialog(Menu));
         while ((op >= 0) && (op <= 5)){
         if (op == 1){
-        agregarLibro(libro, autores);  
+        agregarLibro(libro,autores); 
+        op = Integer.parseInt(JOptionPane.showInputDialog(Menu));
         }
         if (op == 2){
         interfaz.agregarAutor(autores);
@@ -101,7 +102,7 @@ private static void leerAutoresDesdeArchivo( ArrayList<Autor> autores) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\-");
-                if (parts.length == 4) {
+                if (parts.length == 3) {
                     String nombre = parts[0];
                     String pais = parts[1];
                     int id = Integer.parseInt(parts[2]);
@@ -122,61 +123,47 @@ private static void guardarAutoresEnArchivo( ArrayList<Autor> autores) {
                 writer.write(AutorNuevo);
                 writer.newLine();
             }
-            JOptionPane.showMessageDialog(null, "Libros guardados en el archivo 'Libros.txt'");
+            JOptionPane.showMessageDialog(null, "Libros guardados en el archivo 'Autor.txt'");
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al escribir en el archivo 'Libros.txt'");
+            JOptionPane.showMessageDialog(null, "Error al escribir en el archivo 'Autor.txt'");
         }
     }
- 
-private static void agregarLibro(ArrayList<Libros> libros, ArrayList<Autor> autores) {
-    StringBuilder autorOptions = new StringBuilder("Seleccione un autor:\n");
-    for (Autor a : autores) {
-        autorOptions.append(a.getIdA()).append(". ").append(a.getNombre()).append("\n");
-    }
-    
-    int selectedAuthorId = -1;
-    boolean authorIdValid = false;
-    
-    while (!authorIdValid) {
-        try {
-            selectedAuthorId = Integer.parseInt(JOptionPane.showInputDialog(autorOptions.toString()));
-            for (Autor a : autores) {
-                if (a.getIdA() == selectedAuthorId) {
-                    authorIdValid = true;
-                    break;
-                }
-            }
-            if (!authorIdValid) {
-                JOptionPane.showMessageDialog(null, "El ID del autor ingresado no es válido. Por favor, seleccione un autor de la lista.");
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el ID del autor.");
-        }
-    }
-    
-    int idLibro = libros.size() + 1; // Generar un nuevo ID para el libro
-    int codigoLibro = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el código del libro:"));
-    String editorialLibro = JOptionPane.showInputDialog("Ingrese la editorial del libro:");
-    String tituloLibro = JOptionPane.showInputDialog("Ingrese el título del libro:");
-    int paginasLibro = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de páginas del libro:"));
-    int añoLibro = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el año de publicación del libro:"));
 
-    Autor selectedAuthor = null;
+private static void agregarLibro(ArrayList<Libros> libros, ArrayList<Autor> autores) {
+    int idLb = libros.size() + 1;
+    int cd = Integer.parseInt(JOptionPane.showInputDialog("Ingresa el código del libro:"));
+    int idA = Integer.parseInt(JOptionPane.showInputDialog("Ingresa el ID del Autor:"));
+
+    Autor autor = null;
     for (Autor a : autores) {
-        if (a.getIdA() == selectedAuthorId) {
-            selectedAuthor = a;
+        if (a.getIdA() == idA) {
+            autor = a;
             break;
         }
     }
+        if (autor != null) {
+        String editorial = JOptionPane.showInputDialog("Ingresa la editorial del libro:");
+        String titulo = JOptionPane.showInputDialog("Ingresa el título del libro:");
+        int paginas = Integer.parseInt(JOptionPane.showInputDialog("Ingresa el número de páginas del libro:"));
+        int año = Integer.parseInt(JOptionPane.showInputDialog("Ingresa el año de publicación del libro:"));
 
-    if (selectedAuthor != null) {
-        Libros newLibro = new Libros(idLibro, codigoLibro, selectedAuthor, editorialLibro, tituloLibro, paginasLibro, añoLibro);
-        libros.add(newLibro);
+        Libros nuevoLibro = new Libros(idLb, cd, autor, editorial, titulo, paginas, año);
+        libros.add(nuevoLibro);
         guardarLibrosEnArchivo(libros);
         JOptionPane.showMessageDialog(null, "Libro agregado con éxito.");
+    } else {
+        JOptionPane.showMessageDialog(null, "El ID del autor ingresado no existe. Por favor, cree el Autor");
+        String nombre = JOptionPane.showInputDialog("Ingresa el Nombre del Autor");
+        String pais = JOptionPane.showInputDialog("Ingresa el País ");
+        int id = autores.size() + 1;
+        autores.add(new Autor(nombre, pais, id));
+        guardarAutoresEnArchivo(autores);
+
     }
 }
+               
+ }
+ 
 
 
-}
 
